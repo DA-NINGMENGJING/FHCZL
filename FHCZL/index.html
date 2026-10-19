@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>云上忆长征 · 重走二万五千里</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%230e1116'/%3E%3Cpath d='M50 14 L88 30 V52 C88 72 70 84 50 90 C30 84 12 72 12 52 V30 Z' fill='%23d2a54f'/%3E%3Cpath d='M50 26 L66 74 L50 62 L34 74 Z' fill='%23c0392b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* ============================================================
+   云上忆长征 · 视觉体系（暗色高级感 / 云海灯火）
+   深空蓝黑 · 米白 · 赭红 · 军绿 · 鎏金灯火
+   ============================================================ */
+:root{
+  --bg:#0b0e13; --bg2:#0f131a; --panel:#161b24; --panel2:#1d242f;
+  --ink:#ece5d4; --ink-soft:#a89f8e; --dim:#6a7261;
+  --red:#c0392b; --red-deep:#8e2a20; --gold:#d2a54f; --gold-deep:#a67f33;
+  --olive:#7f9567; --olive-deep:#5c6f4a; --line:#303b4a;
+  --serif:'Noto Serif SC','Songti SC','SimSun',serif;
+  --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);color:var(--ink);background:var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(210,165,79,.06) 0, transparent 42%),
+    radial-gradient(circle at 85% 90%, rgba(192,57,43,.05) 0, transparent 40%);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+#app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh;
+  display:flex;flex-direction:column}
+/* 顶部 */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:rgba(15,19,26,.88);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px)}
+.topbar .brand{font-family:var(--serif);font-weight:900;font-size:16px;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.topbar .brand .star{color:var(--gold)}
+.topbar .progress{font-size:12px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.topbar .progress .bar{width:72px;height:6px;background:var(--bg2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.topbar .progress .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .5s}
+/* 主区 */
+main{flex:1;padding-bottom:80px}
+.view{display:none;padding:20px 18px;animation:fadeUp .5s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.section-head{margin:4px 0 18px}
+.section-head .kicker{font-size:11px;letter-spacing:4px;color:var(--gold);font-weight:700}
+.section-head h2{font-family:var(--serif);font-weight:900;font-size:26px;line-height:1.2;margin-top:4px}
+.section-head .rule{height:2px;width:56px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:10px;border-radius:2px}
+/* 底部导航 */
+.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:20;
+  display:flex;background:rgba(11,14,19,.94);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+.bottomnav button{flex:1;background:none;border:none;color:var(--ink-soft);padding:10px 2px 9px;font-size:11px;
+  font-family:var(--sans);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.bottomnav button .ic{width:20px;height:20px}
+.bottomnav button.active{color:var(--gold)}
+.bottomnav button.active .ic{color:var(--gold)}
+/* 通用组件 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-weight:700;
+  font-size:16px;letter-spacing:1px;padding:14px 22px;border:1px solid var(--line);border-radius:8px;cursor:pointer;
+  background:var(--panel);color:var(--ink);min-height:48px;transition:all .15s}
+.btn.primary{background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;border-color:var(--red-deep)}
+.btn.gold{background:linear-gradient(135deg,#dcb25e,var(--gold-deep));color:#171207;border-color:var(--gold-deep)}
+.btn.ghost{background:transparent;border:1px solid var(--line)}
+.btn.small{font-size:14px;padding:10px 16px;min-height:44px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.chip{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
+.hint{font-size:13px;color:var(--ink-soft);display:flex;gap:7px;align-items:flex-start;line-height:1.6}
+.hint b{color:var(--gold)}
+/* 开篇 */
+.hero-video{position:relative;height:420px;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:18px;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.hero-video video{width:100%;height:100%;object-fit:cover;display:block}
+.hero-video .veil{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(11,14,19,.15) 0%,rgba(11,14,19,.1) 42%,rgba(11,14,19,.92) 100%)}
+.hero-video .txt{position:absolute;left:0;right:0;bottom:0;padding:0 20px 22px;text-align:center}
+.hero-video .txt .topline{color:var(--gold);letter-spacing:4px;font-size:11px;font-weight:700;margin-bottom:8px}
+.hero-video .txt h1{font-family:var(--serif);font-weight:900;font-size:44px;line-height:1.05;letter-spacing:6px}
+.hero-video .txt .sub{font-family:var(--serif);letter-spacing:8px;font-size:15px;color:var(--ink-soft);margin-top:8px}
+.prologue .lead{font-family:var(--serif);font-size:17px;line-height:2.05;color:var(--ink);margin-bottom:4px}
+.prologue .lead em{font-style:normal;color:var(--gold)}
+.sec-label{display:flex;align-items:center;gap:10px;margin:24px 0 12px}
+.sec-label .bar{width:4px;height:18px;background:var(--gold);border-radius:2px}
+.sec-label span{font-family:var(--serif);font-weight:900;font-size:17px}
+.prose{font-size:14px;line-height:1.9;color:var(--ink-soft)}
+.data-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.dcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.dcard .num{font-family:var(--serif);font-weight:900;font-size:28px;color:var(--gold);line-height:1.1}
+.dcard .lbl{font-size:11.5px;color:var(--ink-soft);margin-top:4px}
+/* 路线图 */
+.route-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.route-head .current-flag{font-size:13px;color:var(--ink-soft)}
+.route-head .current-flag b{color:var(--gold);font-family:var(--serif)}
+.route-map{background:linear-gradient(180deg,#12161e,#0d1117);border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;padding:6px;box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
+.route-map svg{width:100%;display:block}
+.legend{display:flex;gap:14px;margin:12px 4px 6px;font-size:11px;color:var(--ink-soft);flex-wrap:wrap}
+.legend .li{display:flex;align-items:center;gap:5px}
+.legend .dot{width:10px;height:10px;border-radius:50%}
+.node-list{margin-top:14px;display:flex;flex-direction:column;gap:11px}
+.node{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;
+  display:flex;gap:13px;align-items:flex-start;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.node .idx{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-weight:900;font-size:15px;background:var(--panel2);color:var(--ink-soft)}
+.node.locked{opacity:.5}
+.node.done{border-color:rgba(127,149,103,.5)}
+.node.done .idx{background:var(--olive-deep);color:#e6edda;border-color:var(--olive)}
+.node.current{border-color:rgba(210,165,79,.6);box-shadow:0 0 0 2px rgba(210,165,79,.18),0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+.node.current .idx{background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;border-color:var(--red)}
+.node{cursor:pointer;transition:transform .18s ease,box-shadow .25s}
+.node:active{transform:scale(.985)}
+.node .body{flex:1;min-width:0}
+.node .body .tag{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px}
+.node .body h4{font-family:var(--serif);font-size:16px;margin-bottom:2px}
+.node .body p{font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+.node .arrow{color:var(--gold);align-self:center;flex:none}
+.rnode{transition:transform .18s ease;cursor:pointer}
+.rnode:active{transform:scale(1.16)}
+.rnode{transform-box:fill-box;transform-origin:center}
+.rnode.tap{animation:nodeTap .55s ease}
+@keyframes nodeTap{0%{transform:scale(1);filter:brightness(1)}45%{transform:scale(1.4);filter:brightness(1.7) saturate(1.5)}100%{transform:scale(1);filter:brightness(1)}}
+.ripple{pointer-events:none;fill:none;stroke:#d2a54f;stroke-width:2}
+@keyframes rippleAnim{from{r:9;opacity:.85}to{r:34;opacity:0}}
+.ripple{animation:rippleAnim .75s ease-out forwards}
+.route-hint{font-family:var(--serif);font-size:11px;fill:var(--gold);letter-spacing:3px;animation:hintFade 2.6s ease-in-out infinite}
+@keyframes hintFade{0%,100%{opacity:.35}50%{opacity:.95}}
+/* 详情弹窗 */
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(6,8,12,.7)}
+.modal.open{display:flex}
+.modal-sheet{width:100%;max-width:520px;max-height:88vh;overflow:auto;background:var(--bg2);border-radius:18px 18px 0 0;
+  border:1px solid var(--line);border-bottom:none;animation:sheetUp .3s ease}
+@keyframes sheetUp{from{transform:translateY(48px);opacity:.5}to{transform:none;opacity:1}}
+.modal-head{position:relative;height:170px;overflow:hidden;background:var(--panel)}
+.modal-head img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,14,19,.05),rgba(11,14,19,.86))}
+.modal-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.35);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:16px 18px 30px}
+.modal-body .mtitle{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:2px}
+.modal-body .myear{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:10px}
+.modal-body .mdesc{font-size:14px;line-height:1.8;color:var(--ink-soft);margin-bottom:14px}
+.mfacts{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.mfact{display:flex;justify-content:space-between;background:var(--panel2);border-radius:8px;padding:8px 12px;font-size:13px}
+.mfact b{font-family:var(--serif);color:var(--gold)}
+.mpoem{font-family:var(--serif);font-size:14px;line-height:1.9;color:var(--ink-soft);border-left:2px solid var(--gold);padding-left:12px}
+.msrc{margin-top:12px;padding:10px 12px;background:rgba(210,165,79,.06);border:1px dashed rgba(210,165,79,.35);border-radius:10px;font-size:12px;line-height:1.7;color:var(--ink-soft)}
+.msrc .s-tag{display:inline-block;font-size:10px;color:var(--gold);letter-spacing:2px;border:1px solid rgba(210,165,79,.4);padding:2px 7px;border-radius:6px;margin-bottom:6px}
+.msrc p{margin:0}
+.mnote{margin-top:16px;padding:11px 12px;background:rgba(210,165,79,.07);border:1px solid rgba(210,165,79,.3);border-radius:10px;font-size:12.5px;line-height:1.7;color:var(--ink-soft)}
+/* 答题 */
+.qmeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.qmeta .qstep{font-size:12px;color:var(--ink-soft)}
+.qmeta .qstep b{color:var(--gold)}
+.qcard .q{font-family:var(--serif);font-weight:700;font-size:18px;line-height:1.5;margin-bottom:16px}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;margin-bottom:10px;border:1.5px solid var(--line);
+  border-radius:10px;background:var(--panel);font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer;min-height:48px;line-height:1.4}
+.opt.correct{background:rgba(127,149,103,.28);color:#d8e6c8;border-color:var(--olive)}
+.opt.wrong{background:rgba(192,57,43,.26);color:#f0c4bd;border-color:var(--red)}
+.opt:disabled{cursor:default}
+.explain{margin-top:6px;padding:11px 13px;border-radius:8px;background:var(--panel2);font-size:13.5px;line-height:1.7;color:var(--ink-soft)}
+.explain .why-ok{color:#b7d29a}
+.explain .why-no{color:#eeb0a8}
+/* 互动游戏 · 精美化（实景背景 + 2D图标） */
+.game-stage{position:relative;height:250px;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:16px;
+  box-shadow:0 14px 44px rgba(0,0,0,.5), inset 0 0 0 1px rgba(210,165,79,.12)}
+.game-stage img.bg{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
+.game-stage .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,14,19,.08),rgba(11,14,19,.88))}
+.game-stage .glow{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(210,165,79,.14),transparent 55%)}
+.game-stage .cap{position:absolute;left:16px;right:16px;bottom:14px}
+.game-stage .cap .gno{font-size:11px;color:var(--gold);letter-spacing:3px;font-weight:700;margin-bottom:5px;
+  display:inline-flex;align-items:center;gap:6px}
+.game-stage .cap .gno::before{content:'';width:16px;height:1px;background:var(--gold);display:inline-block}
+.game-stage .cap h3{font-family:var(--serif);font-weight:900;font-size:25px;letter-spacing:2px;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.game-stage .cap p{font-size:12.5px;color:var(--ink-soft);margin-top:5px}
+.game-tab{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+.game-tab .gt{flex:none;min-width:60px;text-align:center;padding:8px 3px;border:1px solid var(--line);border-radius:12px;
+  background:linear-gradient(180deg,var(--panel),#12161e);font-size:10.5px;color:var(--ink-soft);cursor:pointer;line-height:1.35;
+  box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.game-tab .gt b{display:block;font-family:var(--serif);font-size:12px;margin-bottom:1px}
+.game-tab .gt .gno-badge{display:inline-block;width:16px;height:16px;line-height:16px;border-radius:50%;background:var(--panel2);
+  border:1px solid var(--line);color:var(--gold);font-family:var(--serif);font-size:10px;margin-bottom:2px}
+.game-tab .gt.done{border-color:rgba(127,149,103,.6);color:#cfe0ba;background:linear-gradient(180deg,rgba(127,149,103,.16),rgba(127,149,103,.06))}
+.game-tab .gt.done .gno-badge{background:var(--olive-deep);color:#fff;border-color:var(--olive)}
+.game-tab .gt.on{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 2px rgba(210,165,79,.22),0 4px 14px rgba(210,165,79,.15)}
+.gpanel{position:relative;background:linear-gradient(180deg,#182030,#12161e);border:1px solid var(--line);border-radius:16px;
+  padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.4), inset 0 0 40px rgba(0,0,0,.25)}
+.gpanel::before{content:'';position:absolute;top:0;left:14px;right:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(210,165,79,.5),transparent)}
+.gintro{font-size:13.5px;line-height:1.9;color:var(--ink-soft);margin-bottom:14px}
+.gintro b{color:var(--gold)}
+/* 第1关 物品背包 */
+.item-rack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#1d242f,#161b24);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;
+  transition:transform .15s,border-color .15s,box-shadow .15s;box-shadow:0 5px 14px rgba(0,0,0,.35)}
+.item:active{transform:scale(.94)}
+.item .icn{width:44px;height:44px;color:var(--gold);filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
+.item .nm{font-size:12px;color:var(--ink)}
+.item .kind{font-size:9.5px;color:var(--dim);padding:1px 6px;border:1px solid var(--line);border-radius:999px}
+.item.need .kind{color:#b7d29a;border-color:rgba(127,149,103,.4)}
+.item.no .kind{color:#e0a9a1;border-color:rgba(192,57,43,.4)}
+.item.used{opacity:.3;filter:grayscale(1);pointer-events:none}
+.item.flash{border-color:var(--red);animation:shake .4s}
+.backpack{min-height:100px;border:2px dashed rgba(210,165,79,.5);border-radius:14px;background:rgba(210,165,79,.06);
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:12px;transition:border-color .2s,background .2s}
+.backpack .empty{font-size:12.5px;color:var(--dim);letter-spacing:1px}
+.backpack.hover{border-color:var(--gold);background:rgba(210,165,79,.14)}
+.backpack .bpi{width:42px;height:42px;color:var(--gold);filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
+.backpack .bpi span{display:block;font-size:10px;color:var(--ink-soft);text-align:center;margin-top:2px}
+/* 第2关 铁索 */
+.bridge-track{position:relative;height:124px;border-radius:12px;background:linear-gradient(180deg,#0d1218,#151b25);overflow:hidden;border:1px solid var(--line);margin-bottom:14px}
+.bridge{position:absolute;top:66px;left:6%;right:6%;height:5px;background:linear-gradient(90deg,#5c6f4a,#7f9567);border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.6)}
+.bridge::after{content:'';position:absolute;left:-2%;right:-2%;top:-2px;height:1.5px;background:#39465a;box-shadow:0 4px 0 #39465a}
+.fp{position:absolute;top:6px;transform:translateX(-50%);width:22px;height:28px;color:#e0493a;filter:drop-shadow(0 0 8px rgba(224,73,58,.7))}
+.fp::after{content:'';position:absolute;left:50%;top:28px;transform:translateX(-50%);width:2px;height:30px;background:#5a3a2c}
+.warrior{position:absolute;top:44px;left:6%;width:32px;height:32px;color:var(--gold);transition:left .4s ease;z-index:2;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.gflag{position:absolute;top:16px;right:5%;width:30px;height:30px;color:var(--red);filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.gmsg{font-size:13.5px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6}
+.gmsg b{color:var(--gold)}
+/* 第3关 雪山 */
+.snow-stage{position:relative;height:176px;border-radius:12px;background:linear-gradient(180deg,#0e1219,#1a2633);overflow:hidden;border:1px solid var(--line);margin-bottom:14px;box-shadow:inset 0 0 30px rgba(0,0,0,.5)}
+.snow-stage .snowline{position:absolute;left:0;right:0;top:0;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
+.snow-stage .lane{position:absolute;left:6%;right:6%;bottom:0;top:0;display:flex}
+.snow-stage .col{flex:1;border-left:1px dashed rgba(48,59,74,.55);position:relative}
+.snow-stage .col:first-child{border-left:none}
+.snow-stage .col.cur{background:rgba(210,165,79,.05)}
+.snow-stage .climber{position:absolute;bottom:12px;width:34px;height:34px;color:#e8c46a;z-index:2;transition:left .18s;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.snow-stage .hole{position:absolute;left:0;display:flex;align-items:center;justify-content:center;color:#b23a2e;font-size:20px;opacity:.9;filter:drop-shadow(0 0 8px rgba(178,58,46,.6))}
+.snow-note{font-size:13.5px;color:var(--ink-soft);margin-bottom:12px;line-height:1.7}
+.snow-note b{color:var(--gold)}
+.snow-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+/* 第4关 四渡 */
+.chi-map{position:relative;height:206px;border-radius:12px;background:radial-gradient(circle at 50% 55%,#12161e,#0d1117);overflow:hidden;border:1px solid var(--line);margin-bottom:12px;box-shadow:inset 0 0 30px rgba(0,0,0,.5)}
+.chi-map .river{position:absolute;left:-10%;right:-10%;top:50%;height:34px;transform:translateY(-50%);border-top:2px solid #3f6d8a;border-bottom:2px solid #3f6d8a;opacity:.7}
+.chi-map .label{position:absolute;font-size:11px;color:var(--ink-soft);letter-spacing:1px}
+.chi-map .army{position:absolute;width:36px;height:36px;color:var(--red);z-index:2;transition:all .6s ease;filter:drop-shadow(0 0 10px rgba(192,57,43,.6))}
+.dir-btn{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.dir-btn button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 4px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#1d242f,#161b24);color:var(--ink);cursor:pointer;font-family:var(--serif);font-size:15px;min-height:64px;
+  box-shadow:0 5px 14px rgba(0,0,0,.3);transition:all .15s}
+.dir-btn button:active{transform:scale(.95)}
+.dir-btn button .arr{font-size:22px;line-height:1;color:var(--gold)}
+/* 第5关 会师 */
+.army-row{display:flex;gap:10px;margin-bottom:14px}
+.army{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 4px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#1d242f,#161b24);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;
+  box-shadow:0 5px 14px rgba(0,0,0,.35)}
+.army .icn{width:46px;height:46px;color:var(--red);filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
+.army .nm{font-size:11.5px;color:var(--ink)}
+.army.used{opacity:.3;filter:grayscale(1);pointer-events:none}
+.army-slot{display:flex;gap:10px}
+.slot{flex:1;min-height:80px;border:2px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--dim);font-size:11px;text-align:center;padding:6px;gap:4px;transition:all .2s}
+.slot .sn{color:var(--gold);font-family:var(--serif)}
+.slot.filled{border-color:var(--gold);background:rgba(210,165,79,.1);color:var(--gold)}
+.slot.hover{border-color:var(--gold);background:rgba(210,165,79,.16)}
+/* 云上献礼（纯展示 · 不累计） */
+.gift{position:relative;height:360px;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:18px;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.gift img{width:100%;height:100%;object-fit:cover;display:block}
+.gift .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,14,19,.1),rgba(11,14,19,.9))}
+.gift .glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(210,165,79,.18),transparent 55%)}
+.gift .txt{position:absolute;left:0;right:0;bottom:0;padding:0 20px 22px;text-align:center}
+.gift .txt .topline{color:var(--gold);letter-spacing:4px;font-size:11px;font-weight:700}
+.gift .txt h2{font-family:var(--serif);font-weight:900;font-size:34px;letter-spacing:6px;margin:6px 0 4px}
+.gift .txt .sub{font-size:12.5px;color:var(--ink-soft);letter-spacing:2px}
+.gift-lamp{display:flex;align-items:center;gap:14px;padding:20px 16px;border-radius:14px;background:linear-gradient(180deg,#1a2030,#141923);border:1px solid var(--line);margin-bottom:18px}
+.gift-lamp .icon{width:32px;height:32px;color:var(--gold);filter:drop-shadow(0 0 12px rgba(210,165,79,.6))}
+.gift-lamp .icon svg{width:100%;height:100%;display:block}
+.gift-lamp .t{font-family:var(--serif);font-size:17px;color:var(--ink)}
+.gift-lamp .s{font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.6}
+.gift-poem{margin-bottom:18px}
+.gift-poem .line{font-family:var(--serif);font-size:16px;line-height:2;color:var(--ink)}
+.gift-poem .src{font-size:11.5px;color:var(--dim);text-align:right;margin-top:6px}
+/* 云上献礼 · 互动区（点亮灯火 / 献花 / 留言） */
+.gift-acts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.gact{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 4px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#1d242f,#151b25);cursor:pointer;font-family:var(--sans);color:var(--ink);
+  box-shadow:0 6px 16px rgba(0,0,0,.32);transition:transform .15s,border-color .2s,box-shadow .2s;min-height:96px}
+.gact:active{transform:scale(.95)}
+.gact .gi{width:26px;height:26px;color:var(--gc,var(--gold));filter:drop-shadow(0 0 9px currentColor)}
+.gact .gi svg{width:100%;height:100%;display:block}
+.gact .gt{font-family:var(--serif);font-weight:700;font-size:14px;letter-spacing:1px}
+.gact .gs{font-size:10px;color:var(--dim);line-height:1.35}
+.note-box{background:linear-gradient(180deg,#1d242f,#141923);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:14px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.note-box textarea{width:100%;min-height:74px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--ink);
+  font-family:var(--sans);font-size:15px;padding:10px;resize:none;line-height:1.6}
+.note-box textarea:focus{outline:none;border-color:var(--gold)}
+.note-box-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
+.notes{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.note{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;align-items:flex-start}
+.note .ndot{color:var(--gold);flex:none;margin-top:2px;font-size:11px}
+.note p{font-size:13px;color:var(--ink);line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.notes-empty{padding:16px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--line);border-radius:10px}
+.gift .flame{position:absolute;bottom:44px;width:22px;height:22px;color:var(--gold);text-shadow:0 0 14px var(--gold);animation:lampUp 2.6s ease forwards;will-change:transform,opacity}
+.gift .flame svg,.gift .flower svg{width:100%;height:100%;display:block}
+@keyframes lampUp{0%{transform:translateY(6px);opacity:.15}25%{opacity:1}100%{transform:translateY(-240px);opacity:0}}
+.gift .flower{position:absolute;top:-16px;width:24px;height:24px;color:#e8a0a0;text-shadow:0 0 10px rgba(232,160,160,.5);animation:flowerFall 3.2s ease forwards;will-change:transform,opacity}
+@keyframes flowerFall{0%{transform:translateY(0) rotate(0deg);opacity:.15}25%{opacity:1}100%{transform:translateY(430px) rotate(46deg);opacity:.9}}
+/* 动画 */
+.pulse{animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.bounce{animation:bounce 1.5s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
+.rise{animation:rise 1.2s ease forwards}
+@keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.float{animation:float 3.2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.toast{position:fixed;top:64px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:60;
+  background:rgba(11,14,19,.94);color:var(--ink);border:1px solid var(--line);padding:10px 18px;border-radius:10px;font-size:14px;
+  opacity:0;transition:all .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 桌面加宽 */
+@media (min-width:768px){#app{max-width:520px}}
+@media (max-width:360px){.hero-video .txt h1{font-size:38px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- ===== 顶部状态栏 ===== -->
+  <header class="topbar">
+    <div class="brand"><span class="star">★</span>云上忆长征</div>
+    <div class="topright" style="display:flex;align-items:center;gap:8px">
+      <button id="musicBtn" onclick="toggleBgm()" aria-label="背景音乐开关" title="背景音乐"
+        style="display:flex;align-items:center;gap:5px;font-family:var(--sans);background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink-soft);font-size:11px;line-height:1;padding:7px 10px;border-radius:999px;cursor:pointer;min-height:26px">
+        <svg viewBox="0 0 24 24" width="14" height="14" style="flex:none"><path d="M9 18V6l11-2v12" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="6.5" cy="18" r="2.3" fill="currentColor"/><circle cx="17.5" cy="16" r="2.3" fill="currentColor"/></svg>
+        <span id="musicState">音乐</span>
+      </button>
+      <div class="progress">
+        <span id="progText">0 / 8</span>
+        <div class="bar"><div class="fill" id="progFill"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== 视图：开篇 ===== -->
+    <section class="view" id="view-home" data-view="home">
+      <div class="prologue">
+        <div class="hero-video">
+          <video autoplay muted loop playsinline preload="auto" poster="">
+            <source src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/FZ7ObxWy7ozpcXxo97Xci699n1d" type="video/mp4">
+          </video>
+          <div class="veil"></div>
+          <div class="txt">
+            <div class="topline">纪念中国工农红军长征胜利 90 周年</div>
+            <h1>云上忆长征</h1>
+            <div class="sub">一九三四 · 一九三六</div>
+          </div>
+        </div>
+
+        <p class="lead">1934年10月，你背起行囊，成为<em>中央红军</em>的一员，踏上一条前路未卜的征途。身后是故土，前方是万里关山与重重封锁。历史，将把这场远征写进民族的记忆。</p>
+
+        <div class="sec-label"><div class="bar"></div><span>什么是长征</span></div>
+        <div class="card" style="text-align:left">
+          <p class="prose">长征是土地革命战争时期，中国工农红军主力撤离长江南北各苏区、转战万里的伟大战略转移。中央红军1934年10月从江西瑞金等地出发，历时一年、行程二万五千里，冲破数十万敌军围追堵截，爬雪山、过草地，于1935年10月到达陕北。1936年10月，红军三大主力胜利会师，宣告长征胜利结束。</p>
+        </div>
+
+        <div class="sec-label"><div class="bar"></div><span>数说长征</span></div>
+        <div class="data-cards">
+          <div class="dcard"><div class="num">2.5万</div><div class="lbl">行军里程（里）</div></div>
+          <div class="dcard"><div class="num">14</div><div class="lbl">途经省份</div></div>
+          <div class="dcard"><div class="num">约1年</div><div class="lbl">转战时间</div></div>
+          <div class="dcard"><div class="num">600余次</div><div class="lbl">战役战斗</div></div>
+        </div>
+
+        <div class="sec-label"><div class="bar"></div><span>踏上征途</span></div>
+        <button class="btn primary" style="width:100%;font-size:18px" data-goto="route">沿路线答题，重走长征</button>
+        <p class="meta" style="text-align:center;margin-top:16px;font-size:12px;color:var(--dim)">路线答题闯关 · 五关互动游戏 · 终点云上献礼</p>
+      </div>
+    </section>
+
+    <!-- ===== 视图：长征路线 · 答题闯关 + 史料 ===== -->
+    <section class="view" id="view-route" data-view="route">
+      <div class="section-head">
+        <div class="kicker">The Long March</div>
+        <h2>重走长征路</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="route-head">
+        <span class="current-flag">你在此：<b id="routeHere">起点 · 瑞金</b></span>
+        <span class="chip" id="routeChip">0 / 8 已解锁</span>
+      </div>
+
+      <div class="route-map card" style="padding:8px">
+        <svg id="routeSvg" viewBox="0 0 400 310" width="100%" role="img" aria-label="长征路线示意图">
+          <defs>
+            <filter id="rglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="400" height="310" fill="#0e1219"/>
+          <g opacity=".18" stroke="#33404f" stroke-width=".6" fill="none">
+            <path d="M0 60 H400 M0 120 H400 M0 180 H400 M0 240 H400"/>
+            <path d="M60 0 V310 M130 0 V310 M200 0 V310 M270 0 V310 M340 0 V310"/>
+          </g>
+          <path id="routePath" d="M335 262 C318 250,318 240,300 228 C286 218,282 210,268 200 C252 189,232 178,218 168 C204 158,186 172,166 178 C148 184,138 168,124 152 C110 136,100 120,92 100 C84 82,80 62,86 44" fill="none" stroke="#5c3529" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="routePath2" d="M335 262 C318 250,318 240,300 228 C286 218,282 210,268 200 C252 189,232 178,218 168 C204 158,186 172,166 178 C148 184,138 168,124 152 C110 136,100 120,92 100 C84 82,80 62,86 44" fill="none" stroke="#d2a54f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 7"/>
+          <g id="routeNodes"></g>
+          <g id="routeLabels" font-family="'Noto Serif SC',serif" font-weight="700" font-size="11" fill="#a89f8e"></g>
+          <text class="route-hint" x="200" y="300" text-anchor="middle">轻触地点，查看长征岁月</text>
+          <text x="392" y="304" text-anchor="end" font-size="9" fill="#33404f">路线示意 · 答题解锁闯关</text>
+        </svg>
+        <div class="legend">
+          <span class="li"><span class="dot" style="background:#7f9567"></span>已走过</span>
+          <span class="li"><span class="dot" style="background:#c0392b;box-shadow:0 0 8px #c0392b"></span>你在此</span>
+          <span class="li"><span class="dot" style="background:#33404f"></span>未解锁</span>
+        </div>
+      </div>
+
+      <div id="routeDone" style="display:none;text-align:center;margin:18px 0 6px">
+        <p style="font-family:var(--serif);font-size:20px;color:var(--gold);margin-bottom:14px">八大战役关卡全部解锁，征途完成！</p>
+        <button class="btn gold" style="width:100%;font-size:17px" data-goto="end">前往云上献礼</button>
+      </div>
+
+      <div class="node-list" id="nodeList"></div>
+    </section>
+
+    <!-- ===== 视图：互动游戏 · 五关（实景 + 2D图标） ===== -->
+    <section class="view" id="view-game" data-view="game">
+      <div class="section-head">
+        <div class="kicker">Interactive Journey</div>
+        <h2>互动闯关</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="game-tab" id="gameTabs"></div>
+      <div id="gameStage"></div>
+      <div id="gameBody"></div>
+    </section>
+
+    <!-- ===== 视图：云上献礼（纯展示 · 不累计） ===== -->
+    <section class="view" id="view-end" data-view="end">
+      <div class="section-head">
+        <div class="kicker">Gift to the Clouds</div>
+        <h2>云上献礼</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="gift">
+        <img src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/LOLMbDAaPoUR3YxkfgLcU8bRnHc" alt="云海之上点点灯火，跨越时空的敬意">
+        <div class="veil"></div>
+        <div class="glow"></div>
+        <div id="giftFx" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
+        <div class="txt">
+          <div class="topline">跨越时空的致敬</div>
+          <h2>云端灯火</h2>
+          <div class="sub">点亮灯火 · 献花 · 留言，遥寄敬意</div>
+        </div>
+      </div>
+
+      <div class="gift-lamp rise">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c2.6 3.2 4.6 5.8 4.6 9a4.6 4.6 0 0 1-9.2 0C7.4 7.8 9.4 5.2 12 2z"/><path d="M12 16.4V20M8.4 20h7.2"/></svg></div>
+        <div>
+          <div class="t">一盏灯火，一份敬意</div>
+          <div class="s">在云海之巅，为每一位长征先辈点亮灯火、献上一束花，或写下你想说的话。</div>
+        </div>
+      </div>
+
+      <div class="gift-acts" id="giftActs">
+        <button class="gact" onclick="lightUp()" style="--gc:var(--gold)">
+          <span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2.5 3 4.5 5.5 4.5 8.5A4.5 4.5 0 0 1 12 16a4.5 4.5 0 0 1-4.5-4.5C7.5 8.5 9.5 6 12 3z"/><path d="M12 16v5"/><path d="M8 21h8"/></svg></span>
+          <span class="gt">点亮灯火</span>
+          <span class="gs">为长征路点一盏暖光</span>
+        </button>
+        <button class="gact" onclick="giveFlower()" style="--gc:#e8a0a0">
+          <span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="3"/><circle cx="8.5" cy="12.5" r="3"/><circle cx="15.5" cy="12.5" r="3"/><circle cx="12" cy="16" r="3"/><path d="M12 16v5"/></svg></span>
+          <span class="gt">献花致敬</span>
+          <span class="gs">为英烈献上一束花</span>
+        </button>
+        <button class="gact" onclick="openNote()" style="--gc:#b7d29a">
+          <span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l1.6-5.3L16.6 3.7a2 2 0 0 1 3 3L8.6 17.7z"/><path d="M14 6l4 4"/></svg></span>
+          <span class="gt">写下留言</span>
+          <span class="gs">留言寄往云端</span>
+        </button>
+      </div>
+
+      <div class="note-box" id="noteBox" style="display:none">
+        <textarea id="noteTxt" maxlength="60" placeholder="写下你对长征先辈的敬意，最多60字…"></textarea>
+        <div class="note-box-actions">
+          <button class="btn ghost small" onclick="closeNoteBox()">取消</button>
+          <button class="btn gold small" onclick="submitNote()">敬献寄语</button>
+        </div>
+      </div>
+
+      <div class="notes" id="giftNotes"></div>
+
+      <div class="card gift-poem" style="text-align:left">
+        <p class="line">"红军不怕远征难，万水千山只等闲。"</p>
+        <p class="src">——毛泽东《七律·长征》</p>
+      </div>
+
+      <button class="btn ghost" style="width:100%" onclick="resetAll()">重新走一遍长征</button>
+    </section>
+  </main>
+
+  <!-- ===== 底部导航 ===== -->
+  <nav class="bottomnav" id="bottomnav">
+    <button data-goto="home" class="active">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+      起点
+    </button>
+    <button data-goto="route">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8a4 4 0 0 0 0-8H8a4 4 0 0 1 0-8h8"/></svg>
+      长征路
+    </button>
+    <button data-goto="game">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v4H6zM6 17h12v4H6zM3 7h4v10H3zM17 7h4v10h-4zM7 7h10v10H7z"/></svg>
+      互动游戏
+    </button>
+    <button data-goto="end">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.2 4.5 5 .7-3.6 3.5.8 4.9-4.4-2.3-4.4 2.3.8-4.9L4.8 8.2l5-.7z"/></svg>
+      云上献礼
+    </button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 节点详情弹窗 -->
+<div class="modal" id="nodeModal" aria-hidden="true">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <img id="nmImg" alt="">
+      <div class="modal-shade"></div>
+      <button class="modal-close" id="nmClose" aria-label="关闭"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"/></svg></button>
+    </div>
+    <div class="modal-body" id="nmBody"></div>
+  </div>
+</div>
+
+<!-- 答题闯关弹窗 -->
+<div class="modal" id="quizModal" aria-hidden="true">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <img id="qmImg" alt="">
+      <div class="modal-shade"></div>
+      <button class="modal-close" id="qmClose" aria-label="关闭"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"/></svg></button>
+    </div>
+    <div class="modal-body" id="qmBody"></div>
+  </div>
+</div>
+
+<audio id="bgm" loop preload="auto" style="display:none">
+  <source src="https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/MQysb5Sh6oQ4B4xqMdMciJA3nhd" type="audio/wav">
+</audio>
+
+<script>
+/* ============================================================
+   数据：长征节点 · 关卡详情 · 8关答题 · 暗色插画
+   ============================================================ */
+const NODES = [
+  {name:'瑞金出发', year:'1934.10', desc:'中央红军从江西瑞金出发，踏上战略转移之路。'},
+  {name:'血战湘江', year:'1934.11-12', desc:'最悲壮的一战，红军伤亡过半，仍突破封锁。'},
+  {name:'遵义会议', year:'1935.01', desc:'生死攸关的转折点，确立正确军事领导。'},
+  {name:'四渡赤水', year:'1935.01-03', desc:'用兵如神，在川黔滇间巧妙调动敌人。'},
+  {name:'巧渡金沙江', year:'1935.05', desc:'七只小船，昼夜不停，巧渡天险金沙江。'},
+  {name:'飞夺泸定桥', year:'1935.05', desc:'22位勇士攀铁索冲锋，夺下大渡河天险。'},
+  {name:'爬雪山·过草地', year:'1935.06-08', desc:'翻越夹金山，穿越松潘草地，最艰险的岁月。'},
+  {name:'胜利会师', year:'1935.10-1936.10', desc:'先后到达陕北，三大主力胜利会师。'}
+];
+
+const NODE_DETAILS = [
+  {desc:'1934年10月，因第五次反"围剿"失利，中央红军8.6万余人从江西于都河出发，踏上战略转移之路。这是长征的起点，也是保存革命火种的不得已抉择——红军由此开启漫漫西征。', facts:[['出发时间','1934年10月'],['出发人数','约8.6万人'],['出发地','江西瑞金·于都河']], poem:null, src:'中央红军长征出发地纪念园·于都河渡口；参见《红军长征史》'},
+  {desc:'1934年11月底至12月初，中央红军在湘江边与国民党重兵血战，这是长征以来最惨烈的一战。红军由出发时的8.6万人锐减至3万余人。红三十四师为掩护主力渡江，几乎全师壮烈牺牲。', facts:[['时间','1934年11-12月'],['战后余部','约3万余人'],['红三十四师','几乎全师殉难']], poem:'"为苏维埃流尽最后一滴血"——绝命后卫的悲壮坚守。', src:'《红军长征史》；红三十四师师长陈树湘誓词'},
+  {desc:'1935年1月，中共中央在贵州遵义召开政治局扩大会议，纠正了军事指挥上的错误，确立了以毛泽东为代表的正确军事路线。这次会议在生死关头挽救了党和红军，是党的历史上一个伟大转折点。', facts:[['时间','1935年1月'],['地点','贵州遵义'],['历史地位','生死攸关的转折点']], poem:null, src:'《中国共产党简史》：遵义会议是"党的历史上一个生死攸关的转折点"'},
+  {desc:'1935年1月至3月，毛泽东指挥中央红军在川滇黔交界的赤水河两岸来回机动，四渡赤水，巧妙调动并摆脱了数十万敌军的围追堵截，被誉为毛泽东军事生涯的"得意之笔"。', facts:[['时间','1935年1-3月'],['地点','赤水河流域'],['评价','毛泽东军事生涯得意之笔']], poem:null, src:'《红军长征史》；毛泽东1972年对外谈话称四渡赤水为"得意之笔"'},
+  {desc:'1935年5月，红军主力用七只小木船，昼夜不停地在皎平渡一带巧渡金沙江，成功跳出敌人的包围圈，把尾追的国民党军远远甩在了身后。', facts:[['时间','1935年5月'],['渡江工具','七只木船'],['渡口','皎平渡']], poem:null, src:'《红军长征史》·皎平渡渡口遗址史料'},
+  {desc:'1935年5月29日，红四团一天奔袭240里赶到泸定桥。此时桥板已被拆除，仅剩13根铁索。22位勇士攀索匍匐冲锋，一举夺桥，粉碎了蒋介石妄图让红军成为"石达开第二"的图谋。', facts:[['时间','1935年5月29日'],['铁索','仅剩13根'],['突击勇士','22位']], poem:'"大渡桥横铁索寒。"', src:'泸定桥纪念馆"22勇士"史料；毛泽东《七律·长征》'},
+  {desc:'1935年6月起，红军翻越终年积雪的夹金山等20余座大雪山，8月穿越茫茫松潘草地。高寒缺氧、泥潭遍布、缺粮少药，这是长征中最艰难的一段，无数将士长眠于此。', facts:[['翻越雪山','夹金山等20余座'],['穿越草地','松潘草地'],['艰难程度','长征中最艰苦的一段']], poem:'"更喜岷山千里雪，三军过后尽开颜。"', src:'毛泽东《七律·长征》'},
+  {desc:'1935年10月，中央红军到达陕北吴起镇；1936年10月，红军一、二、四方面军在甘肃会宁、将台堡等地胜利会师，长征胜利结束。这一人类壮举，被永远载入史册。', facts:[['到达陕北','1935年10月'],['三大主力会师','1936年10月'],['会师地点','甘肃会宁·将台堡']], poem:'"三军过后尽开颜。"', src:'中共中央《关于若干历史问题的决议》："长征一完结，新局面就开始。"'}
+];
+
+const DARK_IMGS = [
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/PuPObRkjQotpSGx4kT5cCaZBnOb',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/BW9ibZjLeocUgbxO9D4cMvkDn9e',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/GGN4bYaiCoqFuzxmYrEcInDfnOH',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/T3G0bP22EopySvxyuhycybRNnUg',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/S0tNb6hzDoK8aqxatQmcTJmCnqc',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/O4XOb2akTodphBx0Aelc1xnrnoc',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/E2atbdCRbojRaXxG47tc4uyHnre',
+  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/MhGNbtfLkoi1icx6u3Yc79B2n9d'
+];
+
+/* 8关答题（贴合各节点史实，与长征路线融合） */
+const QUIZ_NODES = [
+  {q:'中央红军开始战略转移（长征出发）是在哪一年？', opts:['1934年10月','1935年10月','1936年10月'], ans:0, why:'1934年10月，中央红军从江西瑞金·于都河出发，开启长征。'},
+  {q:'血战湘江之后，中央红军由出发时约8.6万人锐减至多少人？', opts:['约5万人','约3万余人','约1万人'], ans:1, why:'湘江一战是长征最惨烈的一役，红军锐减至3万余人。'},
+  {q:'长征途中被称为"生死攸关的转折点"的会议是？', opts:['八七会议','古田会议','遵义会议'], ans:2, why:'1935年1月的遵义会议，确立了以毛泽东为代表的正确军事路线。'},
+  {q:'被誉为毛泽东军事生涯"得意之笔"的战例是？', opts:['血战湘江','四渡赤水','飞夺泸定桥'], ans:1, why:'四渡赤水，红军在运动中巧妙摆脱数十万敌军的围追堵截。'},
+  {q:'红军主力巧渡金沙江，凭借的渡江工具主要是？', opts:['大型轮船','七只小木船','架设浮桥'], ans:1, why:'红军仅凭七只小木船，在皎平渡昼夜抢渡，跳出包围圈。'},
+  {q:'飞夺泸定桥时，桥面木板已被拆除，勇士们攀越的是什么？', opts:['石拱桥','浮桥','13根铁索'], ans:2, why:'泸定桥仅剩13根铁索，22位勇士攀索匍匐冲锋夺桥。'},
+  {q:'红军翻越的第一座大雪山是？', opts:['夹金山','昆仑山','岷山'], ans:0, why:'1935年6月，红军翻越终年积雪的夹金山。'},
+  {q:'长征胜利结束的标志是？', opts:['占领遵义','红军三大主力会师','到达吴起镇'], ans:1, why:'1936年10月，红军三大主力在甘肃会宁、将台堡等地会师，长征胜利结束。'}
+];
+</script>
+<script>
+/* ============================================================
+   状态与工具
+   ============================================================ */
+const state = { unlocked:[false,false,false,false,false,false,false,false], games:[false,false,false,false,false], notes:[] };
+const STORE_KEY = 'yunshang-changzheng-v3';
+function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem(STORE_KEY));
+    if(!s) return;
+    if(Array.isArray(s.unlocked)&&s.unlocked.length===NODES.length) state.unlocked = s.unlocked.map(Boolean);
+    if(Array.isArray(s.games)&&s.games.length===5) state.games = s.games.map(Boolean);
+    if(Array.isArray(s.notes)) state.notes = s.notes.slice(0, 30);
+  }catch(e){}
+}
+function saveState(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const qs = s => document.querySelectorAll(s);
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 2300);
+}
+function unlockedCount(){ return state.unlocked.filter(Boolean).length; }
+function nodeState(i){
+  const cur = unlockedCount();
+  if(state.unlocked[i]) return 'done';
+  if(i === cur && cur < NODES.length) return 'current';
+  return 'locked';
+}
+function gameDoneCount(){ return state.games.filter(Boolean).length; }
+function renderProgress(){
+  const n = unlockedCount();
+  $('#progText').textContent = n + ' / ' + NODES.length;
+  $('#progFill').style.width = (n/NODES.length*100) + '%';
+}
+
+/* ============================================================
+   路由
+   ============================================================ */
+const VIEWS = ['home','route','game','end'];
+function goto(name){
+  VIEWS.forEach(v=>{ const el = $('#view-'+v); el.classList.toggle('active', v===name); });
+  qs('.bottomnav button').forEach(b=>b.classList.toggle('active', b.dataset.goto===name));
+  window.scrollTo({top:0, behavior:'smooth'});
+  renderProgress();
+  if(name==='route') renderRoute();
+  if(name==='game') renderGame();
+  if(name==='end') renderNotes();
+}
+function bindGoto(){
+  qs('[data-goto]').forEach(el=>el.addEventListener('click', ()=> goto(el.dataset.goto)));
+}
+
+/* ============================================================
+   路线节点（SVG 坐标 + 标签）
+   ============================================================ */
+const RNODES = [
+  {x:335,y:262,r:12,label:'瑞金',lx:335,ly:248,anchor:'middle'},
+  {x:300,y:228,r:9,label:'湘江',lx:288,ly:216,anchor:'end'},
+  {x:268,y:200,r:9,label:'遵义',lx:268,ly:188,anchor:'end'},
+  {x:218,y:168,r:9,label:'四渡赤水',lx:218,ly:153,anchor:'middle'},
+  {x:166,y:178,r:9,label:'金沙江',lx:166,ly:163,anchor:'middle'},
+  {x:124,y:152,r:9,label:'泸定桥',lx:118,ly:138,anchor:'end'},
+  {x:92,y:100,r:9,label:'雪山草地',lx:88,ly:86,anchor:'end'},
+  {x:86,y:44,r:12,label:'延安',lx:86,ly:26,anchor:'middle'}
+];
+const STAR = '<path d="M86 36 l2.7 5.5 6.1 .9 -4.4 4.3 1 6.1 -5.4 -2.8 -5.4 2.8 1 -6.1 -4.4 -4.3 6.1 -.9 z" fill="#d2a54f"/>';
+
+/* ============================================================
+   视图：长征路线 · 答题闯关 + 史料随时可看
+   ============================================================ */
+function renderRoute(){
+  const cur = unlockedCount(), allDone = cur >= NODES.length;
+  $('#routeChip').textContent = cur + ' / 8 已解锁';
+  $('#routeHere').textContent = allDone ? '延安 · 胜利会师' : NODES[cur].name;
+  $('#routeDone').style.display = allDone ? 'block' : 'none';
+
+  const nodesHtml = RNODES.map((n,i)=>{
+    const st = nodeState(i);
+    let fill, stroke, extra = '';
+    if(st==='done'){ fill='#7f9567'; stroke='#9db181'; }
+    else if(st==='current'){
+      fill='#c0392b'; stroke='#e8c46a';
+      extra = `<circle cx="${n.x}" cy="${n.y}" r="${n.r+5}" fill="none" stroke="#e8c46a" stroke-width="1.5" opacity=".6" class="pulse"/>`;
+    } else { fill='#1d242f'; stroke='#39465a'; }
+    return `<g class="rnode" data-i="${i}" style="cursor:pointer">
+      <circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>
+      <circle cx="${n.x}" cy="${n.y}" r="${n.r-5}" fill="${st==='locked'?'#161b24':stroke}" opacity=".9"/>
+      ${st==='current' ? `<circle cx="${n.x}" cy="${n.y}" r="${n.r-5}" fill="#c0392b"/>` : ''}
+      ${i===7 ? STAR.replace('86', n.x).replace('36', n.y-8) : ''}
+      ${extra}
+    </g>`;
+  }).join('');
+  $('#routeNodes').innerHTML = nodesHtml;
+  $('#routeLabels').innerHTML = RNODES.map(n=>`<text x="${n.lx}" y="${n.ly}" text-anchor="${n.anchor}">${n.label}</text>`).join('');
+
+  const list = $('#nodeList');
+  list.innerHTML = NODES.map((n,i)=>{
+    const st = nodeState(i);
+    const tag = st==='done' ? '已走过' : (st==='current' ? '你在此 · 答题解锁' : '未解锁 · 史料可看');
+    const arrow = st==='current' ? '<span class="arrow">→</span>' : '';
+    return `<div class="node ${st}" data-i="${i}">
+      <div class="idx">${i+1}</div>
+      <div class="body">
+        <div class="tag">${tag} · ${n.year}</div>
+        <h4>${n.name}</h4>
+        <p>${n.desc}</p>
+      </div>
+      ${arrow}
+    </div>`;
+  }).join('');
+
+  list.querySelectorAll('.node').forEach(el=>{
+    el.addEventListener('click', ()=>{ showNodeDetail(+el.dataset.i); });
+  });
+  qs('#routeNodes .rnode').forEach(g=>{
+    g.addEventListener('click', ()=>{
+      const i = +g.dataset.i;
+      playRipple(i);
+      g.classList.remove('tap'); void g.offsetWidth; g.classList.add('tap');
+      setTimeout(()=>g.classList.remove('tap'), 600);
+      showNodeDetail(i);
+    });
+  });
+  bindGoto();
+}
+/* 点击地点时的涟漪扩散动效 */
+function playRipple(i){
+  const svg = $('#routeSvg'), n = RNODES[i];
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', n.r);
+  c.setAttribute('fill','none'); c.setAttribute('stroke','#d2a54f'); c.setAttribute('stroke-width','2');
+  c.setAttribute('class','ripple');
+  svg.appendChild(c);
+  c.addEventListener('animationend', ()=>c.remove());
+}
+
+/* 节点详情弹窗：真实史料 + 当前关答题入口 */
+function showNodeDetail(i){
+  const d = NODE_DETAILS[i], n = NODES[i], st = nodeState(i);
+  $('#nmImg').src = DARK_IMGS[i]; $('#nmImg').alt = n.name;
+  const curIdx = unlockedCount();
+  const action = st==='current'
+    ? `<button class="btn primary" style="width:100%;margin-top:16px" onclick="closeModal('#nodeModal');openQuiz(${i})">开始答题 · 解锁此地点</button>`
+    : (st==='locked'
+      ? `<div class="mnote">真实史料已为你呈现。完成「${NODES[curIdx].name}」的答题后，即可在此继续闯关。</div>`
+      : `<div class="mnote">此地点已解锁。点击地图上任意地点，均可随时查看真实史料。</div>`);
+  $('#nmBody').innerHTML = `
+    <div class="mtitle">${n.name}</div>
+    <div class="myear">${n.year}</div>
+    <div class="mdesc">${d.desc}</div>
+    <div class="mfacts">${d.facts.map(f=>`<div class="mfact"><span>${f[0]}</span><b>${f[1]}</b></div>`).join('')}</div>
+    ${d.poem?`<div class="mpoem">${d.poem}</div>`:''}
+    ${d.src?`<div class="msrc"><span class="s-tag">史料出处</span><p>${d.src}</p></div>`:''}
+    ${action}`;
+  $('#nodeModal').classList.add('open');
+}
+function closeModal(id){ $(id).classList.remove('open'); }
+function bindModal(){
+  $('#nmClose').addEventListener('click', ()=>closeModal('#nodeModal'));
+  $('#nodeModal').addEventListener('click', e=>{ if(e.target.id==='nodeModal') closeModal('#nodeModal'); });
+  $('#qmClose').addEventListener('click', ()=>closeModal('#quizModal'));
+  $('#quizModal').addEventListener('click', e=>{ if(e.target.id==='quizModal') closeModal('#quizModal'); });
+}
+
+/* 答题闯关（与长征路线融合：答对解锁下一关） */
+let quizIdx = -1;
+function openQuiz(i){
+  quizIdx = i;
+  const n = NODES[i], q = QUIZ_NODES[i];
+  $('#qmImg').src = DARK_IMGS[i]; $('#qmImg').alt = n.name;
+  $('#qmBody').innerHTML = `
+    <div class="mtitle">第 ${i+1} 关 · ${n.name}</div>
+    <div class="myear">${n.year} · 答对解锁下一关</div>
+    <div class="qcard">
+      <p class="q">${q.q}</p>
+      <div id="qopts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}"><span>${String.fromCharCode(65+k)}. ${o}</span></button>`).join('')}</div>
+      <div id="qexplain"></div>
+    </div>`;
+  $('#quizModal').classList.add('open');
+  $('#qopts').querySelectorAll('.opt').forEach(b=>b.addEventListener('click', ()=>checkAnswer(+b.dataset.k)));
+}
+function checkAnswer(k){
+  if(quizIdx<0) return;
+  const i = quizIdx, q = QUIZ_NODES[i];
+  const correct = k === q.ans;
+  qs('#qopts .opt').forEach(o=>{ o.disabled = true; if(+o.dataset.k===q.ans) o.classList.add('correct'); });
+  if(!correct) { qs('#qopts .opt')[k].classList.add('wrong'); }
+  if(correct) winNode(i);
+  const last = unlockedCount() >= NODES.length;
+  const next = correct
+    ? (last
+      ? `<button class="btn gold" style="width:100%;margin-top:14px" onclick="closeModal('#quizModal');goto('end')">征途完成，前往云上献礼</button>`
+      : `<button class="btn primary" style="width:100%;margin-top:14px" onclick="closeModal('#quizModal');openQuiz(${i+1})">进入下一关</button>`)
+    : `<button class="btn ghost" style="width:100%;margin-top:14px" onclick="closeModal('#quizModal');renderRoute()">再试一次</button>`;
+  $('#qexplain').innerHTML = `
+    <div class="explain"><span class="${correct?'why-ok':'why-no'}">${correct?'回答正确，已解锁这一关。':'回答错误，请再试一次。'}</span>${q.why}</div>
+    ${next}`;
+}
+function winNode(i){
+  if(state.unlocked[i]) return;
+  state.unlocked[i] = true;
+  saveState();
+  renderProgress(); renderRoute();
+  toast('解锁「' + NODES[i].name + '」');
+}
+
+/* ============================================================
+   互动游戏 · 五关（实景背景 + 2D图标）
+   ============================================================ */
+const GAMES = [
+  {tag:'整装待发', title:'选择物品踏上长征路', sub:'把该带的行装拖进背包，别被无关之物拖慢脚步', img:DARK_IMGS[0], intro:'长征出发前，你要挑选行装。从下方物品中<b>拖拽真正需要的</b>进背包，凑齐四件必需装备即可出发。'},
+  {tag:'飞夺泸定桥', title:'铁索上冲锋', sub:'22勇士攀越13根铁索，冲过大渡河天险', img:DARK_IMGS[5], intro:'桥板已拆，只剩铁索。点击<b>攀行前进</b>穿越铁索；途中遭遇炮火时，先点<b>隐蔽</b>躲过再走，抵达对岸即胜。'},
+  {tag:'爬雪山·过草地', title:'雪线攀行', sub:'高寒缺氧，每步都关乎生死', img:DARK_IMGS[6], intro:'前方雪坑遍地。看清<b>本行雪坑在第几列</b>，移动红军到安全列后点<b>上攀</b>，四行登顶即胜。'},
+  {tag:'四渡赤水', title:'赤水用兵', sub:'在川黔滇间巧妙调动敌人', img:DARK_IMGS[3], intro:'红军被敌重兵包围。按史实选择每次渡河方向（<b>西→东→西→东</b>），四次全部正确即可跳出包围。'},
+  {tag:'胜利会师', title:'三军会师', sub:'三大主力胜利会师，长征胜利结束', img:DARK_IMGS[7], intro:'把<b>红一、红二、红四</b>三个方面军，分别拖到对应的会师位置，三军归位即胜利会师。'}
+];
+
+/* —— 通用拖拽（pointer events，兼容触摸） —— */
+function startDrag(e, el, onDrop){
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  e.preventDefault();
+  const rect = el.getBoundingClientRect();
+  const ghost = el.cloneNode(true);
+  ghost.style.cssText = 'position:fixed;z-index:999;pointer-events:none;opacity:.92;margin:0;width:'+rect.width+'px;left:'+(e.clientX-(e.clientX-rect.left))+'px;top:'+(e.clientY-(e.clientY-rect.top))+'px';
+  const ox = e.clientX-rect.left, oy = e.clientY-rect.top;
+  document.body.appendChild(ghost);
+  const move = ev=>{
+    ghost.style.left = (ev.clientX-ox)+'px';
+    ghost.style.top = (ev.clientY-oy)+'px';
+  };
+  const up = ev=>{
+    document.removeEventListener('pointermove', move);
+    document.removeEventListener('pointerup', up);
+    if(ghost.parentNode) ghost.remove();
+    onDrop(ev.clientX, ev.clientY);
+  };
+  document.addEventListener('pointermove', move);
+  document.addEventListener('pointerup', up);
+}
+function overRect(x, y, el){
+  if(!el) return false;
+  const r = el.getBoundingClientRect();
+  return x>=r.left && x<=r.right && y>=r.top && y<=r.bottom;
+}
+
+/* —— 第1关：整装待发（拖拽物品进背包） —— */
+const G1_ITEMS = [
+  {name:'草鞋', need:true,  icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 34c2-12 8-20 14-20s12 8 14 20c0 6-4 8-14 8s-14-2-14-8z"/><path d="M24 14c-2-4-6-4-8-2M24 14c2-4 6-4 8-2"/><path d="M12 30c4-2 8-2 12 0s8 2 12 0"/></svg>'},
+  {name:'水壶', need:true,  icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M16 20h16v18a8 8 0 0 1-16 0z"/><path d="M16 24h-4a4 4 0 0 1 0-8h4M24 16v-4M24 12h2a3 3 0 0 1 3 3v1"/></svg>'},
+  {name:'干粮袋', need:true, icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M24 6c8 0 14 5 14 12 0 12-6 24-14 24S10 30 10 18c0-7 6-12 14-12z"/><path d="M10 18h28M14 14c4 2 8 2 12 0M18 28c5 2 9 2 14 0"/></svg>'},
+  {name:'火把', need:true,  icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M24 6s6 8 6 14a6 6 0 0 1-12 0c0-6 6-14 6-14z"/><path d="M24 26v18M16 44h16"/></svg>'},
+  {name:'香烟', need:false, icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 12h20v8H14zM16 20v6M20 20v6M24 20v6M28 20v6M32 20v6"/></svg>'},
+  {name:'收音机', need:false, icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="10" y="10" width="28" height="28" rx="3"/><circle cx="24" cy="20" r="4"/><path d="M24 24v6M18 32h12"/></svg>'},
+  {name:'胭脂盒', need:false, icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="8"/><circle cx="30" cy="18" r="1.6" fill="currentColor"/></svg>'},
+  {name:'银元', need:false, icn:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="24" cy="24" r="15"/><path d="M24 12v24M16 18c4-2 16-2 16 0 0 6-16 6-16 12 0 2 2 4 6 4"/></svg>'}
+];
+const G1_PACK = [];
+function initG1(){
+  G1_PACK.length = 0;
+  const rack = $('#g1Rack');
+  rack.innerHTML = G1_ITEMS.map((it,i)=>
+    `<div class="item ${it.need?'need':'no'}" data-i="${i}"><div class="icn">${it.icn}</div><div class="nm">${it.name}</div><div class="kind">${it.need?'长征必需':'不宜携带'}</div></div>`
+  ).join('');
+  rack.querySelectorAll('.item').forEach(el=>{
+    el.addEventListener('pointerdown', e=>{
+      startDrag(e, el, (x,y)=>{
+        if(overRect(x,y,$('#g1Back'))){
+          const it = G1_ITEMS[+el.dataset.i];
+          if(it.need){
+            el.classList.add('used');
+            G1_PACK.push(it);
+            renderPack();
+            if(G1_PACK.length >= 4){ winG(0); }
+          } else {
+            el.classList.add('flash'); toast('这件东西，带不走你走完万里长征');
+            setTimeout(()=>el.classList.remove('flash'), 450);
+          }
+        }
+      });
+    });
+  });
+  renderPack();
+}
+function renderPack(){
+  const b = $('#g1Back');
+  if(G1_PACK.length===0){
+    b.innerHTML = '<span class="empty">把行装拖到这里</span>';
+  } else {
+    b.innerHTML = G1_PACK.map(it=>`<div class="bpi">${it.icn}<span>${it.name}</span></div>`).join('');
+  }
+}
+
+/* —— 第2关：飞夺泸定桥 —— */
+const G2 = { pos:0, total:9, fire:[3,6,8], hiding:false };
+function renderG2(){
+  $('#g2Warrior').style.left = (6 + G2.pos/G2.total*84) + '%';
+  $('#g2Btn').textContent = G2.hiding ? '炮火来袭 · 隐蔽！' : '攀行前进';
+  $('#g2Msg').innerHTML = G2.hiding
+    ? '铁索对岸，<b>炮火轰鸣</b>——就地隐蔽，等待火光过去'
+    : '距对岸还差 <b>' + (G2.total - G2.pos) + '</b> 段 · 点击攀行';
+}
+function g2Action(){
+  if(G2.pos >= G2.total) return;
+  if(G2.hiding){
+    G2.hiding = false; G2.pos++;
+    if(G2.pos >= G2.total){ winG(1); return; }
+    renderG2();
+    return;
+  }
+  G2.pos++;
+  if(G2.fire.includes(G2.pos)){ G2.hiding = true; toast('炮火轰鸣，快隐蔽！'); }
+  if(G2.pos >= G2.total){ winG(1); return; }
+  renderG2();
+}
+
+/* —— 第3关：爬雪山（雪线攀行） —— */
+const G3 = { row:0, rows:4, cols:4, col:1, hole:2 };
+function renderG3(){
+  const st = $('#g3Stage');
+  st.querySelectorAll('.col').forEach((c,k)=>{ c.classList.toggle('cur', k===G3.col); });
+  const holes = st.querySelector('#g3Holes');
+  const colw = (100-12)/G3.cols;
+  const holeLeft = 6 + G3.hole*colw;
+  const rowH = (100-12)/G3.rows;
+  const rowTop = 100 - (G3.row+1)*rowH;
+  holes.innerHTML = `<div class="hole" style="left:${holeLeft}%;top:${rowTop}%;transform:translate(-50%,-50%)">◆</div>`;
+  const cl = $('#g3Climber');
+  const pct = 6 + G3.col*colw + colw/2;
+  cl.style.left = 'calc(' + pct + '% - 17px)';
+  $('#g3Note').innerHTML = G3.row >= G3.rows
+    ? '已登顶雪线！'
+    : '第 <b>' + (G3.row+1) + '/' + G3.rows + '</b> 行 · 雪坑在第 <b>' + (G3.hole+1) + '</b> 列';
+}
+function g3Move(d){
+  G3.col = Math.max(0, Math.min(G3.cols-1, G3.col+d));
+  renderG3();
+}
+function g3Climb(){
+  if(G3.row >= G3.rows) return;
+  if(G3.col === G3.hole){
+    toast('踩进雪坑，滑落一行！');
+    G3.row = Math.max(0, G3.row-1);
+  } else {
+    G3.row++;
+  }
+  if(G3.row >= G3.rows){ winG(2); return; }
+  G3.hole = Math.floor(Math.random()*G3.cols);
+  renderG3();
+}
+
+/* —— 第4关：四渡赤水 —— */
+const G4 = { idx:0, seq:['西','东','西','东'] };
+function renderG4(){
+  const m = $('#g4Map');
+  const dir = ['东','南','西','北'].map((d,k)=>{
+    const base = [
+      {x:'78%',y:'30%'},{x:'50%',y:'82%'},{x:'22%',y:'30%'},{x:'50%',y:'8%'}
+    ][k];
+    return `<span class="label" style="left:${base.x};top:${base.y};transform:translate(-50%,-50%)">${d}</span>`;
+  }).join('');
+  m.innerHTML = `
+    <div class="river"></div>
+    <span class="label" style="left:50%;top:45%;transform:translate(-50%,-50%)">赤水河</span>
+    ${dir}
+    <div class="army" id="g4Army" style="left:50%;top:58%"><svg viewBox="0 0 36 36"><path d="M18 4l5.5 13.5 2.5 13-8-7-8 7 2.5-13z" fill="currentColor"/></svg></div>`;
+  $('#g4Step').textContent = G4.idx>=4 ? '红军已跳出包围圈！' : '第 '+(G4.idx+1)+' 渡 · 选择红军渡河方向';
+}
+function g4Pick(d){
+  if(G4.idx >= 4) return;
+  if(d === G4.seq[G4.idx]){
+    G4.idx++;
+    toast('红军成功第 ' + G4.idx + ' 渡赤水');
+    if(G4.idx >= 4){ winG(3); renderG4(); return; }
+  } else {
+    toast('方向有误，陷入敌围，重新调整');
+  }
+  renderG4();
+}
+
+/* —— 第5关：三军会师（拖拽归位） —— */
+const G5_ARMIES = [
+  {name:'红一方面军', key:'yifang'},
+  {name:'红二方面军', key:'erfang'},
+  {name:'红四方面军', key:'sifang'}
+];
+const G5_PLACED = {};
+function initG5(){
+  Object.keys(G5_PLACED).forEach(k=>delete G5_PLACED[k]);
+  const row = $('#g5Row');
+  row.innerHTML = G5_ARMIES.map((a,i)=>
+    `<div class="army" data-i="${i}"><div class="icn"><svg viewBox="0 0 44 44"><path d="M22 4l6 14 12 2-9 8 2 12-11-6-11 6 2-12-9-8 12-2z" fill="currentColor"/></svg></div><div class="nm">${a.name}</div></div>`
+  ).join('');
+  row.querySelectorAll('.army').forEach(el=>{
+    el.addEventListener('pointerdown', e=>{
+      startDrag(e, el, (x,y)=>{
+        const slots = qs('#g5Slots .slot');
+        let hit = null;
+        slots.forEach(s=>{ if(overRect(x,y,s)) hit = s; });
+        if(hit){
+          const a = G5_ARMIES[+el.dataset.i];
+          if(hit.dataset.key === a.key){
+            el.classList.add('used');
+            G5_PLACED[a.key] = true;
+            hit.classList.add('filled');
+            hit.innerHTML = '<span class="sn">'+a.name+'</span>已会师';
+            if(Object.keys(G5_PLACED).length >= 3){ winG(4); }
+          } else {
+            hit.classList.add('hover');
+            toast('位置不对，再试一次');
+            setTimeout(()=>hit.classList.remove('hover'), 300);
+          }
+        }
+      });
+    });
+  });
+  renderG5Slots();
+}
+function renderG5Slots(){
+  $('#g5Slots').innerHTML = G5_ARMIES.map((a,i)=>
+    `<div class="slot" data-key="${a.key}"><span class="sn">${a.name}</span>会师于此</div>`
+  ).join('');
+}
+
+/* —— 关卡渲染与通关 —— */
+let curGame = 0;
+function winG(i){
+  if(state.games[i]) return;
+  state.games[i] = true;
+  saveState();
+  renderGameTabs();
+  toast('通关！' + GAMES[i].title);
+  if(gameDoneCount() >= 5) toast('五关全部完成，去云上献礼看看吧');
+}
+function renderGameTabs(){
+  $('#gameTabs').innerHTML = GAMES.map((g,i)=>
+    `<div class="gt ${state.games[i]?'done':''} ${i===curGame?'on':''}" data-g="${i}"><span class="gno-badge">${i+1}</span><b>${g.tag}</b>${state.games[i]?'✓':''}</div>`
+  ).join('');
+  qs('#gameTabs .gt').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      curGame = +t.dataset.g;
+      renderGame();
+    });
+  });
+}
+function renderGame(){
+  renderGameTabs();
+  const g = GAMES[curGame];
+  const stage = $('#gameStage');
+  stage.innerHTML = `
+    <div class="game-stage">
+      <img class="bg" src="${g.img}" alt="${g.tag}">
+      <div class="veil"></div>
+      <div class="glow"></div>
+      <div class="cap">
+        <div class="gno">第 ${curGame+1} 关 · ${g.tag}</div>
+        <h3>${g.title}</h3>
+        <p>${g.sub}</p>
+      </div>
+    </div>`;
+  const body = $('#gameBody');
+  if(state.games[curGame]){
+    body.innerHTML = `<div class="card" style="text-align:center;padding:30px 16px">
+      <div style="font-size:46px;color:var(--gold)">★</div>
+      <p style="font-family:var(--serif);font-size:19px;margin:12px 0 6px;color:var(--ink)">此关已通关</p>
+      <p style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">${g.intro.replace(/<[^>]+>/g,'')}</p>
+      <button class="btn ghost" onclick="curGame=(curGame+1)%5;renderGame()" style="width:100%">查看下一关</button>
+    </div>`;
+    return;
+  }
+  if(curGame===0){
+    body.innerHTML = `<div class="gpanel"><p class="gintro">${g.intro}</p>
+      <div class="item-rack" id="g1Rack"></div>
+      <div class="backpack" id="g1Back"><span class="empty">把行装拖到这里</span></div>
+    </div>`;
+    initG1();
+  } else if(curGame===1){
+    body.innerHTML = `<div class="gpanel"><p class="gintro">${g.intro}</p>
+      <div class="bridge-track">
+        <div class="bridge"></div>
+        <div class="fp" style="left:${6+3/9*84}%"></div>
+        <div class="fp" style="left:${6+6/9*84}%"></div>
+        <div class="fp" style="left:${6+8/9*84}%"></div>
+        <div class="warrior" id="g2Warrior"><svg viewBox="0 0 32 32"><path d="M16 4c4 0 7 3 7 7 0 6-3 12-7 15-4-3-7-9-7-15 0-4 3-7 7-7z" fill="currentColor"/></svg></div>
+        <div class="gflag"><svg viewBox="0 0 30 30"><path d="M6 4h18l-4 5 4 5H6z" fill="currentColor"/><path d="M6 4v22" stroke="currentColor" stroke-width="2"/></svg></div>
+      </div>
+      <p class="gmsg" id="g2Msg"></p>
+      <button class="btn primary" id="g2Btn" style="width:100%" onclick="g2Action()">攀行前进</button>
+    </div>`;
+    G2.pos = 0; G2.hiding = false; renderG2();
+  } else if(curGame===2){
+    body.innerHTML = `<div class="gpanel"><p class="gintro">${g.intro}</p>
+      <div class="snow-stage" id="g3Stage">
+        <div class="snowline"></div>
+        <div class="lane" id="g3Cols">
+          ${Array.from({length:4},()=>'<div class="col"></div>').join('')}
+        </div>
+        <div id="g3Holes" style="position:absolute;inset:0;pointer-events:none"></div>
+        <div class="climber" id="g3Climber"><svg viewBox="0 0 34 34"><path d="M17 3c4 0 7 3 7 7 0 7-3 13-7 16-4-3-7-9-7-16 0-4 3-7 7-7z" fill="currentColor"/></svg></div>
+      </div>
+      <p class="snow-note" id="g3Note"></p>
+      <div class="snow-ctrl">
+        <button class="btn ghost" onclick="g3Move(-1)">← 向左</button>
+        <button class="btn ghost" onclick="g3Move(1)">向右 →</button>
+      </div>
+      <button class="btn primary" style="width:100%;margin-top:10px" onclick="g3Climb()">向上攀行</button>
+    </div>`;
+    G3.row = 0; G3.col = 1; G3.hole = Math.floor(Math.random()*4); renderG3();
+  } else if(curGame===3){
+    body.innerHTML = `<div class="gpanel"><p class="gintro">${g.intro}</p>
+      <div class="chi-map" id="g4Map"></div>
+      <p class="gmsg" id="g4Step"></p>
+      <div class="dir-btn">
+        ${['东','南','西','北'].map(d=>`<button onclick="g4Pick('${d}')"><span class="arr">${d==='东'?'→':d==='西'?'←':d==='南'?'↓':'↑'}</span>${d}渡</button>`).join('')}
+      </div>
+    </div>`;
+    G4.idx = 0; renderG4();
+  } else {
+    body.innerHTML = `<div class="gpanel"><p class="gintro">${g.intro}</p>
+      <div class="army-row" id="g5Row"></div>
+      <div class="army-slot" id="g5Slots"></div>
+    </div>`;
+    initG5();
+  }
+}
+
+/* 重置 */
+function resetAll(){
+  state.unlocked = [false,false,false,false,false,false,false,false];
+  state.games = [false,false,false,false,false];
+  state.notes = [];
+  quizIdx = -1;
+  saveState();
+  renderProgress(); renderRoute(); renderGame(); renderNotes();
+  closeModal('#quizModal'); closeModal('#nodeModal');
+  goto('home'); toast('已重置，重新出发');
+}
+
+/* ============================================================
+   云上献礼 · 互动（点亮灯火 / 献花 / 留言）
+   仅记录个人互动，不做云端累计数字展示
+   ============================================================ */
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function renderNotes(){
+  const n = $('#giftNotes');
+  if(!n) return;
+  n.innerHTML = state.notes.length
+    ? state.notes.map(t=>`<div class="note"><span class="ndot">◆</span><p>${esc(t)}</p></div>`).join('')
+    : '<div class="notes-empty">云端还空着，写下你的第一句寄语吧</div>';
+}
+function lightUp(){
+  const fx = $('#giftFx');
+  const f = document.createElement('span');
+  f.className = 'flame';
+  f.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2.5 3 4.5 5.5 4.5 8.5A4.5 4.5 0 0 1 12 16a4.5 4.5 0 0 1-4.5-4.5C7.5 8.5 9.5 6 12 3z"/><path d="M12 16v4"/></svg>';
+  f.style.left = (10 + Math.random()*80) + '%';
+  fx.appendChild(f);
+  setTimeout(()=>f.remove(), 2700);
+  toast('已为你点亮一盏灯火');
+}
+function giveFlower(){
+  const fx = $('#giftFx');
+  const f = document.createElement('span');
+  f.className = 'flower';
+  f.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3"/><circle cx="8.5" cy="12.5" r="3"/><circle cx="15.5" cy="12.5" r="3"/><circle cx="12" cy="16" r="3"/><path d="M12 16v4"/></svg>';
+  f.style.left = (12 + Math.random()*76) + '%';
+  fx.appendChild(f);
+  setTimeout(()=>f.remove(), 3300);
+  toast('一朵鲜花，遥寄敬意');
+}
+function openNote(){
+  const b = $('#noteBox');
+  b.style.display = 'block';
+  $('#noteTxt').focus();
+}
+function closeNoteBox(){
+  $('#noteBox').style.display = 'none';
+  $('#noteTxt').value = '';
+}
+function submitNote(){
+  const t = $('#noteTxt').value.trim();
+  if(!t){ toast('先写下几句话吧'); return; }
+  state.notes.unshift(t.slice(0,60));
+  if(state.notes.length > 30) state.notes.pop();
+  saveState();
+  closeNoteBox();
+  renderNotes();
+  toast('寄语已寄往云端');
+}
+
+/* 背景音乐开关（需用户手势触发，不自动播放） */
+function toggleBgm(){
+  const a = $('#bgm'), st = $('#musicState');
+  if(a.paused){
+    a.volume = 0.55;
+    a.play().then(()=>{ st.textContent='音乐·播'; $('#musicBtn').style.color='var(--gold)'; })
+     .catch(()=>toast('音乐暂不可用，请稍后再试'));
+  } else {
+    a.pause();
+    st.textContent='音乐·关'; $('#musicBtn').style.color='';
+  }
+}
+
+/* ============================================================
+   启动
+   ============================================================ */
+loadState();
+bindGoto();
+bindModal();
+renderProgress();
+goto('home');
+</script>
+
+</body>
+</html>
+<!-- （注：内容由AI生成） -->
