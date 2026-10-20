@@ -438,7 +438,7 @@ main{flex:1;padding-bottom:80px}
             <g id="a2Labels" font-family="'Noto Serif SC',serif" font-weight="600" font-size="9.5" fill="#8893a2"></g>
           </g>
           <g id="gA4" class="army-line">
-            <path class="army-path" id="ap4" d="M190 120 L96 128 L72 82 L148 56 L196 26"/>
+            <path class="army-path" id="ap4" d="M190 120 L96 128 L70 156 L82 130 L150 48"/>
             <g id="a4Nodes"></g>
             <g id="a4Labels" font-family="'Noto Serif SC',serif" font-weight="600" font-size="9.5" fill="#8893a2"></g>
           </g>
@@ -628,13 +628,13 @@ const NODE_DETAILS = [
 
 const DARK_IMGS = [
   'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/PuPObRkjQotpSGx4kT5cCaZBnOb',
-  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/BW9ibZjLeocUgbxO9D4cMvkDn9e',
+  'https://aka.doubaocdn.com/s/2iv0R1GISi',
   'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/GGN4bYaiCoqFuzxmYrEcInDfnOH',
   'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/T3G0bP22EopySvxyuhycybRNnUg',
-  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/S0tNb6hzDoK8aqxatQmcTJmCnqc',
+  'https://aka.doubaocdn.com/s/HdBeAHCU8q',
   'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/O4XOb2akTodphBx0Aelc1xnrnoc',
   'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/E2atbdCRbojRaXxG47tc4uyHnre',
-  'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/MhGNbtfLkoi1icx6u3Yc79B2n9d'
+  'https://aka.doubaocdn.com/s/NP4TdUgdcl'
 ];
 
 /* 8关答题（贴合各节点史实，与长征路线融合） */
@@ -729,14 +729,15 @@ const SUB_PLACES = [
 ];
 /* 其他三支红军长征路线关键地点（点击查看说明，重要地点特殊色，含配图） */
 const ARMY_NODES = [
-  {id:'h25a',g:'gA25',x:238,y:60,r:6,label:'罗山',lx:238,ly:48,anchor:'middle',army:'红二十五军',special:false,img:'https://aka.doubaocdn.com/s/a99jyPJKD2',desc:'1934年11月，红二十五军自河南罗山何家冲出发，<b>先遣北上</b>，沿途开辟陕南游击根据地，1935年9月抵达陕北，是最早到达陕北的长征队伍。'},
-  {id:'h25b',g:'gA25',x:206,y:24,r:7,label:'吴起镇',lx:206,ly:12,anchor:'middle',army:'红二十五军',special:true,img:'https://aka.doubaocdn.com/s/50g8wU13Fp',desc:'1935年10月，中央红军与红十五军团在陕北吴起镇会师，<b>长征胜利到达陕北</b>。吴起镇成为中央红军长征的落脚点。'},
-  {id:'h4a',g:'gA4',x:190,y:120,r:6,label:'通江',lx:190,ly:108,anchor:'middle',army:'红四方面军',special:false,img:'https://aka.doubaocdn.com/s/0vy9wzyMaU',desc:'红四方面军自川陕革命根据地（四川通江、巴中一带）出发，1935年3月强渡嘉陵江，开始长征。'},
-  {id:'h4b',g:'gA4',x:96,y:128,r:7,label:'懋功会师',lx:78,ly:116,anchor:'end',army:'红四方面军',special:true,img:'https://aka.doubaocdn.com/s/9ELw9vUNUZ',desc:'1935年6月，中央红军与红四方面军在四川懋功（今小金）胜利会师，两大主力力量得以汇聚。'},
-  {id:'h4c',g:'gA4',x:148,y:56,r:6,label:'岷州',lx:148,ly:44,anchor:'middle',army:'红四方面军',special:false,img:'https://aka.doubaocdn.com/s/LUyYZAKmwR',desc:'红四方面军三过雪山草地，1936年7月在甘孜与红二、六军团会师后，北上甘南岷州一带。'},
-  {id:'h2a',g:'gA2',x:216,y:226,r:6,label:'桑植',lx:210,ly:214,anchor:'end',army:'红二方面军（红二·六军团）',special:false,img:'https://aka.doubaocdn.com/s/Dt61gbBeiS',desc:'1935年11月，红二、六军团自湖南桑植出发长征，转战湘鄂川黔滇康等省。'},
-  {id:'h2b',g:'gA2',x:66,y:196,r:6,label:'云南',lx:60,ly:184,anchor:'end',army:'红二方面军（红二·六军团）',special:false,img:'https://aka.doubaocdn.com/s/wlwL2jYswv',desc:'红二、六军团1936年3月进入云南，渡过金沙江，摆脱追兵，继续北上。'},
-  {id:'h2c',g:'gA2',x:140,y:60,r:7,label:'会宁会师',lx:124,ly:48,anchor:'end',army:'红二方面军（红二·六军团）',special:true,img:'https://aka.doubaocdn.com/s/uVPUq2Sswf',desc:'1936年10月，红一、红二、红四方面军在甘肃会宁会师，<b>长征胜利结束</b>。'}
+  {id:'h25a',g:'gA25',x:238,y:60,r:6,label:'罗山',lx:238,ly:48,anchor:'middle',army:'红二十五军',special:false,img:'https://aka.doubaocdn.com/s/kCVkq59YIU',desc:'1934年11月，红二十五军自河南罗山何家冲出发，<b>先遣北上</b>，沿途开辟陕南游击根据地，1935年9月抵达陕北，是最早到达陕北的长征队伍。'},
+  {id:'h25b',g:'gA25',x:206,y:24,r:7,label:'吴起镇',lx:206,ly:12,anchor:'middle',army:'红二十五军',special:true,img:'https://aka.doubaocdn.com/s/UXzZXFkhRV',desc:'1935年10月，中央红军与红十五军团在陕北吴起镇会师，<b>长征胜利到达陕北</b>。吴起镇成为中央红军长征的落脚点。'},
+  {id:'h4a',g:'gA4',x:190,y:120,r:6,label:'旺苍',lx:182,ly:108,anchor:'middle',army:'红四方面军',special:false,img:'https://aka.doubaocdn.com/s/P8m1RJOoIn',desc:'1935年3月，红四方面军自川陕苏区<b>旺苍</b>西渡嘉陵江，踏上长征之路。'},
+  {id:'h4b',g:'gA4',x:96,y:128,r:7,label:'懋功会师',lx:96,ly:100,anchor:'middle',army:'红四方面军',special:true,img:'https://aka.doubaocdn.com/s/I1r5fjPbPF',desc:'1935年6月，中央红军与红四方面军在四川懋功（今小金）胜利会师，两大主力力量得以汇聚。'},
+  {id:'h4c',g:'gA4',x:82,y:130,r:7,label:'甘孜会师',lx:130,ly:152,anchor:'middle',army:'红四方面军',special:true,img:'https://aka.doubaocdn.com/s/iDjkPWhXBN',desc:'懋功会师后，红四方面军转战川康，三翻雪山、两过草地；1936年6月在甘孜与红二、六军团会师，随后北上入甘。'},
+  {id:'h4d',g:'gA4',x:150,y:48,r:7,label:'会宁会师',lx:150,ly:36,anchor:'middle',army:'红四方面军',special:true,img:'https://aka.doubaocdn.com/s/HIo1NHnrSQ',desc:'1936年10月，红一、红二、红四方面军在甘肃会宁胜利会师，长征胜利结束。'},
+  {id:'h2a',g:'gA2',x:216,y:226,r:6,label:'桑植',lx:210,ly:214,anchor:'end',army:'红二方面军（红二·六军团）',special:false,img:'https://aka.doubaocdn.com/s/ZOuQWjObi3',desc:'1935年11月，红二、六军团自湖南桑植出发长征，转战湘鄂川黔滇康等省。'},
+  {id:'h2b',g:'gA2',x:66,y:196,r:6,label:'云南',lx:60,ly:184,anchor:'end',army:'红二方面军（红二·六军团）',special:false,img:'https://aka.doubaocdn.com/s/VRdz70jntY',desc:'红二、六军团1936年3月进入云南，渡过金沙江，摆脱追兵，继续北上。'},
+  {id:'h2c',g:'gA2',x:140,y:60,r:7,label:'将台堡会师',lx:140,ly:82,anchor:'middle',army:'红二方面军（红二·六军团）',special:true,img:'https://aka.doubaocdn.com/s/HIo1NHnrSQ',desc:'1936年10月22日，红二方面军在宁夏将台堡与红一方面军胜利会师，<b>三大主力会师至此完成</b>。'}
 ];
 
 /* ============================================================
@@ -1341,3 +1342,4 @@ goto('home');
 
 </body>
 </html>
+<!-- （注：内容由AI生成） -->
